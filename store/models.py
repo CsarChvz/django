@@ -56,15 +56,15 @@ class Customer(models.Model):
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
 
 
-    # Se agrega una subclase la cual va a tener los metados de nuestra tabla
-    class Meta:
-        db_table = "store_customers"
-        # ¿Para que se usan los index?
+    # # Se agrega una subclase la cual va a tener los metados de nuestra tabla
+    # class Meta:
+    #     db_table = "store_customers"
+    #     # ¿Para que se usan los index?
 
-        # -- Se usan para acelerar nuestras busquedas de la base de datos
-        indexes = [
-            models.Index(fields=["last_name", "first_name"])
-        ]
+    #     # -- Se usan para acelerar nuestras busquedas de la base de datos
+    #     indexes = [
+    #         models.Index(fields=["last_name", "first_name"])
+    #     ]
 
 
 class Order(models.Model):

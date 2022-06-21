@@ -55,6 +55,18 @@ class Customer(models.Model):
     # Campos de eleccion y posibles valores en el campo y su valor default
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
 
+
+    # Se agrega una subclase la cual va a tener los metados de nuestra tabla
+    class Meta:
+        db_table = "store_customers"
+        # ¿Para que se usan los index?
+
+        # -- Se usan para acelerar nuestras busquedas de la base de datos
+        indexes = [
+            models.Index(fields=["last_name", "first_name"])
+        ]
+
+
 class Order(models.Model):
 
     # Elecciones de status
@@ -100,7 +112,9 @@ class OrderItem(models.Model):
 class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    # Tenemos que cambiar el tipo de dato como ForeignKey para las relaciones
+    # Tenemos que cambiar el tipo de dato como Fo
+    # reignKey para las relaciones
+    zip_code = models.IntegerField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
 

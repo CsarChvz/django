@@ -1,0 +1,5 @@
+https://www.yoelprogramador.com/instalar-mysql-en-linux-ubuntu/
+https://parzibyte.me/blog/2019/02/05/instalar-configurar-mysql-linux-ubuntu/
+
+# Postgres
+https://parzibyte.me/blog/2019/06/05/instalar-postgresql-linux-ubuntu/

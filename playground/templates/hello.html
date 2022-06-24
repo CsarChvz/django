@@ -5,3 +5,9 @@
 
 <h1>Hellowolrd</h1>
 {% endif %}
+
+<ul>
+  {% for product in products %}
+  <li>{{product.customer}}</li>
+  {% endfor %}
+</ul>

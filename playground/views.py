@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from store.models import Collection, Order, Product, Customer
+from store.models import Collection, Order, OrderItem, Product, Customer
 # Create your views here.
 def say_hello(request):
     #query_set = Product.objects.all()
@@ -40,6 +40,7 @@ def say_hello(request):
     # --- Products with low inventory (less than 10) ---
     # productos = Product.objects.filter(inventory__lt=10)
     # --- Orders placed by customer with id = 1 ---
-    query_set = Order.objects.filter(customer__id=1)
-    return render(request, "hello.html",{'name': 'Mosh', 'products': list(query_set)})
+    #query_set = OrderItem.objects.filter(product__collection__id=3)
+    query_set = Product.objects.filter(id__in=OrderItem.objects.values("product__id").distinct()).order_by('title')
+    return render(request, "hello.html",{'name': 'Mosh', 'products': query_set})
 

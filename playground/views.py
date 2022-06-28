@@ -4,43 +4,18 @@ from django.http import HttpResponse
 from store.models import Collection, Order, OrderItem, Product, Customer
 # Create your views here.
 def say_hello(request):
-    #query_set = Product.objects.all()
+    # Deferring Fields ----
+    # Este metodo only a diferencia del metodo values, no devuelve un diccionario
 
-    # En djgango para buscar los productos que son mayor o con nua condicion, no se usan los operadores > <
-    # Si no su forma es keyword = value
-    # Entonces para hacerlo se pone el nombre del la keyword y dos guiones bajos, despues la condicion
-    # Estas condiciones son:
-    # gt = "grater than"
-    # gte = "grater than or equal"
-    # lt = "less than"
-    # lte = "less than or equal"
+    # Hay que tener cuidado  cuando se usa el only, ya que vamos a terminar con varias consultas
+    #query_set = Product.objects.only('id', 'title')
 
-    #Quedaría así una condicion
+    # Existe otro metodo diferente al values el cual se llama "defer"
+    # defer() -- Es el opuesto al values method
+    # Este metodo nos permite aplazar la carga de ciertos campos para después
 
-    # unit_price__gt=20
-    # keyword__[condicionDjango]=value 
+    #Este ejemplo sería que queremos todos los campos menos el descripcipon este sería luego
+    query_set = Product.objects.defer('description')
 
-    #Estos se llaman Fields lookups
-    #https://docs.djangoproject.com/en/4.0/ref/models/querysets/#field-lookups
-    #query_set = Product.objects.filter(unit_price__gt=20)
-
-    #Para rango seria algo igual pero el value seria una tupla
-    #query_set = Product.objects.filter(unit_price__range=(20, 30))
-
-    # Para checar si contienen algo se pueden con 
-    # keyword__icontains
-    #query_set = Product.objects.filter(title__icontains="coffee")
-
-
-    # Ejercicios
-    # --- Customers with .com accounts ---
-    #com_accounts = Customer.objects.filter(email__contains=".com")
-    # --- Collections that don’t have a featured product ---
-    # collections = Collection.objects.filter(featured_product__isnull=True)
-    # --- Products with low inventory (less than 10) ---
-    # productos = Product.objects.filter(inventory__lt=10)
-    # --- Orders placed by customer with id = 1 ---
-    #query_set = OrderItem.objects.filter(product__collection__id=3)
-    query_set = Product.objects.filter(id__in=OrderItem.objects.values("product__id").distinct()).order_by('title')
     return render(request, "hello.html",{'name': 'Mosh', 'products': query_set})
 
